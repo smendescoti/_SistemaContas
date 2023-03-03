@@ -1,0 +1,77 @@
+﻿@** Definir a classe de modelo desta página *@
+@model SistemaContas.Presentation.Models.AccountRegisterModel
+
+@{
+    //define a página de layout que será herdada
+    Layout = "~/Views/Shared/AccountLayout.cshtml";
+}
+
+<div class="row mt-3">
+    <div class="col-md-4 offset-md-4">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="text-center">
+                    <h2>Sistema Contas</h2>
+                    <h5>Cadastrar Usuário</h5>
+                </div>
+
+                <hr />
+
+                <div class="text-center mb-2">
+                    <strong>@TempData["Mensagem"]</strong>
+                </div>
+
+                @using(Html.BeginForm())
+                {
+                    <div class="mb-2">
+                        <label>Entre com seu nome:</label>
+                        @Html.TextBoxFor(model => model.Nome, new { @class="form-control" })
+                        <span class="text-danger">
+                            @Html.ValidationMessageFor(model => model.Nome)
+                        </span>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Entre com seu email:</label>
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                        <span class="text-danger">
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </span>
+                        <span class="text-danger">
+                            <strong>@TempData["ErroEmail"]</strong>
+                        </span>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Entre com sua senha:</label>
+                        @Html.PasswordFor(model => model.Senha, new { @class = "form-control" })
+                        <span class="text-danger">
+                            @Html.ValidationMessageFor(model => model.Senha)
+                        </span>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Confirme sua senha:</label>
+                        @Html.PasswordFor(model => model.SenhaConfirmacao, new { @class = "form-control" })
+                        <span class="text-danger">
+                            @Html.ValidationMessageFor(model => model.SenhaConfirmacao)
+                        </span>
+                    </div>
+
+                    <div class="mb-2 d-grid">
+                        <input type="submit" value="Realizar Cadastro" class="btn btn-primary" />
+                    </div>
+
+                    <div class="mb-2 d-grid">
+                        <a href="/Account/Login" class="btn btn-light">
+                            Já possui conta? <strong>Acesse aqui!</strong>
+                        </a>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

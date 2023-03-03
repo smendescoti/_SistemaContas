@@ -1,0 +1,38 @@
+﻿@model List<SistemaContas.Presentation.Models.CategoriasConsultaModel>
+
+@{
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<h4>Consulta de Categorias</h4>
+<p>Listagem de categorias cadastradas.</p>
+
+<div class="table-responsive">
+    <table class="table table-sm table-hover grid_datatable">
+        <thead>
+            <tr>
+                <th>Nome da categoria</th>
+                <th>Operações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Nome</td>
+                    <td>
+                        <a href="/Categorias/Edicao/@item.IdCategoria" 
+                            class="btn btn-outline-primary btn-sm">
+                            Editar
+                        </a>
+                        <a href="/Categorias/Exclusao/@item.IdCategoria" 
+                            onclick="return confirm('Deseja realmente excluir esta categoria?');"
+                            class="btn btn-outline-danger btn-sm">
+                            Excluir
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

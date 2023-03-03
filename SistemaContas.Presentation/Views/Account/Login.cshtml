@@ -1,0 +1,62 @@
+﻿@** Definir a classe de modelo desta página *@
+@model SistemaContas.Presentation.Models.AccountLoginModel
+
+@{
+    //define a página de layout que será herdada
+    Layout = "~/Views/Shared/AccountLayout.cshtml";
+}
+
+<div class="row mt-5">
+    <div class="col-md-4 offset-md-4">
+        <div class="card">
+            <div class="card-body">
+                
+                <div class="text-center">
+                    <h2>Sistema Contas</h2>
+                    <h5>Realizar Autenticação</h5>
+                </div>
+
+                <hr/>
+
+                <div class="text-danger text-center">
+                    <strong>@TempData["Mensagem"]</strong>
+                </div>
+
+                @using(Html.BeginForm())
+                {
+                    <div class="mb-2">
+                        <label>Entre com seu email:</label>
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                        <span class="text-danger">
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </span>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Entre com sua senha:</label>
+                        @Html.PasswordFor(model => model.Senha, new { @class = "form-control" })
+                        <span class="text-danger">
+                            @Html.ValidationMessageFor(model => model.Senha)
+                        </span>
+                        <div class="text-end">
+                            <a href="/Account/PasswordRecover">
+                                Esqueci minha senha?
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mb-2 d-grid">
+                        <input type="submit" value="Acessar Sistema" class="btn btn-primary"/>
+                    </div>
+
+                    <div class="mb-2 d-grid">
+                        <a href="/Account/Register" class="btn btn-light">
+                            Não possui conta? <strong>Cadastre-se aqui!</strong>
+                        </a>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

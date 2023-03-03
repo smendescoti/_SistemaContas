@@ -1,0 +1,89 @@
+﻿@model SistemaContas.Presentation.Models.ContasConsultaModel
+
+@{
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<h4>Consulta de Contas</h4>
+<p>Selecione o período de datas desejado para consultar suas contas.</p>
+
+@using (Html.BeginForm())
+{
+    <div class="row mb-2">
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.DataInicio, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.DataInicio)
+            </span>
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.DataFim, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.DataFim)
+            </span>
+        </div>
+        <div class="col-md-6">
+            <input type="submit" class="btn btn-success" value="Pesquisar Contas" />
+        </div>
+    </div>
+}
+
+@if (Model != null && Model.Contas != null)
+{
+    if (Model.Contas.Count > 0)
+    {
+        <div class="table-responsive">
+            <table class="table table-sm table-hover grid_datatable">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Nome da conta</th>                        
+                        <th>Valor</th>
+                        <th>Tipo</th>
+                        <th>Categoria</th>                        
+                        <th>Operações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Contas)
+                    {
+                        <tr>
+                            <td>@item.Data.Value.ToString("dd/MM/yyyy")</td>
+                            <td>@item.Nome</td>                            
+                            <td>@item.Valor.Value.ToString("c")</td>
+                            <td>
+                                @if (item.Tipo == 1)
+                                {
+                                    <span class="badge bg-info">RECEBER</span>
+                                }
+                                else if (item.Tipo == 2)
+                                {
+                                    <span class="badge bg-warning">PAGAR</span>
+                                }
+                            </td>
+                            <td>@item.Categoria.Nome</td>
+                            <td>
+                                <a href="/Contas/Edicao/@item.IdConta" 
+                                    class="btn btn-primary btn-sm">
+                                    Editar
+                                </a>
+                                <a href="/Contas/Exclusao/@item.IdConta"
+                                    onclick="return confirm('Deseja realmente excluir esta conta?');"
+                                    class="btn btn-danger btn-sm">
+                                    Excluir
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Nenhum resultado foi encontrado.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+}
